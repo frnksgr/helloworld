@@ -1,0 +1,18 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: helloworld-bp
+  namespace: default
+spec:
+  build:
+    source:
+      git:
+  runLatest:
+    configuration:
+      revisionTemplate:
+        spec:
+          container:
+            image: docker.io/frnksgr/helloworld
+            env:
+            - name: PORT
+              value: "8080"

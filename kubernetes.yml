@@ -1,0 +1,53 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: helloworld
+        image: frnksgr/helloworld
+        ports:
+        - containerPort: 8080
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  helloworld
+  labels:
+    app: helloworld
+spec:
+  selector:
+    app:  helloworld
+  type:  ClusterIP
+  sessionAffinity: None
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: helloworld
+  annotations:
+    kubernetes.io/ingress.class: helloworld
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/ssl-redirect: false
+spec:
+  rules:
+  - host: ""
+    http:
+      paths: 
+      - path: helloworld
+        backend:
+          serviceName: helloworld
+          servicePort: 80
