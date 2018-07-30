@@ -2,17 +2,29 @@ apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
   name: helloworld-bp
-  namespace: default
 spec:
-  build:
-    source:
-      git:
   runLatest:
     configuration:
-      revisionTemplate:
+      build:  # build.knative.dev/v1alpha1.BuildTemplateSpec
+        source:
+          # oneof git|gcs|custom:
+          git:
+            url: https://github.com/frnksgr/helloworld
+            #commit: ...
+        template:  # defines build template
+          name: buildpack # builder name
+          #namespace: build-templates
+          arguments:
+          - name: IMAGE 
+            value: &image gcr.io/sap-cp-gke/helloworld-bp:latest  # destination for image
+
+      revisionTemplate:  # template for building Revision
+        #metadata: ...
         spec:
-          container:
-            image: docker.io/frnksgr/helloworld
-            env:
-            - name: PORT
-              value: "8080"
+          container:  # k8s core.v1.Container
+            image: *image
+            #env:  # Updated environment variables to go live with new source.
+            #- name: FOO
+            #  value: bar
+            #- name: HELLO
+            #  value: world

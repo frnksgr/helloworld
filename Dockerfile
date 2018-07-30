@@ -1,9 +1,9 @@
-FROM golang:1.9 as builder
+FROM golang:1.10 as builder
 WORKDIR /go/src/github.com/frnksgr/helloworld
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o helloworld .
 
-FROM busybox
+FROM scratch
 COPY --from=builder /go/src/github.com/frnksgr/helloworld .
 ENV PORT=8080
 EXPOSE 8080
