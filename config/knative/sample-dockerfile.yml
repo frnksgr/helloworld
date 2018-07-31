@@ -1,20 +1,22 @@
+---
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
-  name: helloworld-df
+  name: helloworld-kn-df
+  namespace: default
 spec:
   runLatest:
     configuration:
       build:
         source:
           git:
-            url: https://github.com/mchmarny/frnksgr/helloworld.git
+            url: https://github.com/frnksgr/helloworld.git
             revision: master
         template:
           name: kaniko
           arguments:
           - name: IMAGE
-            value: &image gcr.io/sap-cp-gke/helloworld-df:latest
+            value: &image gcr.io/sap-cp-gke/helloworld-kn-df
       revisionTemplate:
         spec:
           container:

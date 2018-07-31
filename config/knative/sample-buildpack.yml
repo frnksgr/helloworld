@@ -1,7 +1,8 @@
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
-  name: helloworld-bp
+  name: helloworld-kn-bp
+  namespace: default
 spec:
   runLatest:
     configuration:
@@ -16,7 +17,7 @@ spec:
           #namespace: build-templates
           arguments:
           - name: IMAGE 
-            value: &image gcr.io/sap-cp-gke/helloworld-bp:latest  # destination for image
+            value: &image gcr.io/sap-cp-gke/helloworld-kn-bp  # destination for image
 
       revisionTemplate:  # template for building Revision
         #metadata: ...

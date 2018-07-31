@@ -1,7 +1,8 @@
+---
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
-  name: helloworld
+  name: helloworld-kn
   namespace: default
 spec:
   runLatest:
