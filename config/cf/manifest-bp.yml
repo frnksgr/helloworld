@@ -1,0 +1,8 @@
+---
+applications:
+- buildpack: go_buildpack
+  path: ../..
+  memory: 64M
+  instances: 2
+  env:
+    GOPACKAGENAME: helloworld

@@ -22,7 +22,7 @@ func getPort() int {
 	if value, hasPort := os.LookupEnv("PORT"); hasPort {
 		if port, err = strconv.Atoi(value); err != nil {
 			logger.Println("Cannot convert PORT from environment")
-			logger.Printf("Using defaut port: %d\n", defaultPort)
+			logger.Println("Using defaut port")
 		}
 	} else {
 		logger.Println("No PORT env variable found")

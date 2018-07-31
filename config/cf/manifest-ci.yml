@@ -1,0 +1,6 @@
+---
+applications:
+- memory: 48M
+  instances: 2
+  docker:
+    image: docker.io/frnksgr/helloworld
