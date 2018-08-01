@@ -15,7 +15,7 @@ go-build: $(src)
 	@echo to call: curl http://localhost:4711/
 
 docker-build: Dockerfile $(src)
-	docker build -t $(image) .
+	docker build -t $(image) -f Dockerfile.docker .
 	@echo to run: docker run -e FROM=docker-container -p 4711:8080 $($image)
 	@echo to call: curl http://localhost:4711/
 
@@ -23,7 +23,7 @@ docker-push: # docker-build
 	docker push $(image)
 
 docker-build-cf: Dockerfile $(src)
-	docker build -t $(image)-cf --build-arg BASEIMAGE=alpine .
+	docker build -t $(image)-cf --build-arg BASEIMAGE=alpine -f Dockerfile.docker.
 	@echo to run: docker run -e FROM=docker-container-cf -p 4711:8080 $($image)-cf
 	@echo to call: curl http://localhost:4711/
 

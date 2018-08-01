@@ -17,9 +17,9 @@ spec:
           - name: IMAGE
             value: &image gcr.io/sap-cp-gke/helloworld-kn-df:latest
       revisionTemplate:
-        #metadata:
-        #  labels:
-        #    knative.dev/type: app
+        metadata:
+          labels:
+            knative.dev/type: app
         spec:
           container:
             image: *image
@@ -27,3 +27,4 @@ spec:
             env:
             - name: FROM
               value: knative-dockerfile
+

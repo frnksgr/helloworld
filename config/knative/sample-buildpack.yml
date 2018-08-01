@@ -11,23 +11,27 @@ spec:
           # oneof git|gcs|custom:
           git:
             url: https://github.com/frnksgr/helloworld
-            #commit: ...
+            revision: master
         template:  # defines build template
           name: buildpack # builder name
           #namespace: build-templates
           arguments:
           - name: IMAGE 
             value: &image gcr.io/sap-cp-gke/helloworld-kn-bp  # destination for image
+          env:
+            # required by go buildpack
+            - name: GOPACKAGENAME
+              value: helloworld
+            - name: GOVERSION
+              value: go1.10
 
       revisionTemplate:  # template for building Revision
-         metadata:
+        metadata:
           labels:
             knative.dev/type: app
         spec:
           container:  # k8s core.v1.Container
             image: *image
-            #env:  # Updated environment variables to go live with new source.
-            #- name: FOO
-            #  value: bar
-            #- name: HELLO
-            #  value: world
+            env:
+            - name: FROM
+              value: knative-buildpack

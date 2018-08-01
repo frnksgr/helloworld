@@ -6,7 +6,7 @@ config/
 .dockerignore
 .draft*
 .git*
-.Dockerfile
+Dockerfile*
 *.swp
 *.log
 draft*
