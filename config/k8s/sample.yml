@@ -16,6 +16,9 @@ spec:
         image: frnksgr/helloworld
         ports:
         - containerPort: 8080
+        env:
+        - name: FROM
+          value: kubernetes-native
 
 ---
 kind: Service
@@ -28,7 +31,9 @@ metadata:
 spec:
   selector:
     app:  helloworld
-  type:  ClusterIP
+  #type:  ClusterIP
+  #Error during sync: error while evaluating the ingress spec: service "default/helloworld" is type "ClusterIP", expected "NodePort" or "LoadBalancer"
+  type: NodePort
   sessionAffinity: None
   ports:
   - port: 80
