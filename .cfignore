@@ -1,3 +1,14 @@
-*
-!main.go
-!manifest.yml
+helloworld
+debug
+charts/
+tmp/
+config/
+.dockerignore
+.draft*
+.git*
+.Dockerfile
+*.swp
+*.log
+draft*
+Makefile
+README.md

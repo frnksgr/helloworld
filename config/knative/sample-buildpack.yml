@@ -20,7 +20,9 @@ spec:
             value: &image gcr.io/sap-cp-gke/helloworld-kn-bp  # destination for image
 
       revisionTemplate:  # template for building Revision
-        #metadata: ...
+         metadata:
+          labels:
+            knative.dev/type: app
         spec:
           container:  # k8s core.v1.Container
             image: *image

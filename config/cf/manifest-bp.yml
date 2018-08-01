@@ -6,3 +6,4 @@ applications:
   instances: 2
   env:
     GOPACKAGENAME: helloworld
+    FROM: cloudfoundry-buildpack

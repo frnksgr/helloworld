@@ -1,4 +1,5 @@
 helloworld
 debug
 *.swp
+*.log
 tmp/

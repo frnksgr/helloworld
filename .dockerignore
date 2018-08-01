@@ -1,3 +1,13 @@
-Dockerfile
+Dockerfile*
 draft.toml
 charts/
+config/
+tmp/
+helloworld
+debug
+.git
+.gitignore
+.cfignore
+.draft*
+Makefile
+README.md
