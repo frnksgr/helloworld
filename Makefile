@@ -2,14 +2,11 @@
 src = main.go
 image = docker.io/frnksgr/helloworld
 cf-domain = bosh-lite.com
-k8s-namespace = hello
 k8s-domain = default.example.com
-knative-gw := $(shell kubectl -n istio-system get svc knative-ingressgateway \
-  -o jsonpath="{.status.loadBalancer.ingress[0].ip}") 
-nginx-gw := $(shell kubectl -n nginx get svc nginx-ingress-controller \
-  -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+knative-gw=$(shell scripts/get-gateway.sh istio-system knative-ingressgateway)
+nginx-gw=$(shell scripts/get-gateway.sh nginx nginx-ingress-controller)
 
-# wow, self documenting makefile
+# wow, simple self documenting makefile
 # see https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 .DEFAULT_GOAL := help
 .PHONY: help
@@ -47,16 +44,16 @@ cf-push-containerimage: ## push to cloud foundry using docker image
 
 k8s-deploy: ## deploy to k8s with ingress
 	kubectl apply -f config/k8s/sample.yml
-	@echo to call: curl -H \"Host: helloworld.$(k8s-domain)\" $(nginx-gw) 
+	@echo to call: curl -H \"Host: helloworld.$(k8s-domain)\" http://$(nginx-gw)/
 
 knative-deploy: ## deploy to knative without build
 	kubectl apply -f config/knative/sample.yml
-	@echo to call: curl -H \"Host: helloworld-kn.$(k8s-domain)\" $(knative-gw) 
+	@echo to call: curl -H \"Host: helloworld-kn.$(k8s-domain)\" http://$(knative-gw)/
 
 knative-deploy-dockerfile: ## deploy to knative with Dockerfle based build
 	kubectl apply -f config/knative/sample-dockerfile.yml
-	@echo to call: curl -H \"Host: helloworld-kn-df.$(k8s-domain)\" $(knative-gw) 
+	@echo to call: curl -H \"Host: helloworld-kn-df.$(k8s-domain)\" http://$(knative-gw)/
 
 knative-deploy-buildpack: ## deploy to knative with buildpack build
 	kubectl apply -f config/knative/sample-buildpack.yml
-	@echo to call: curl -H \"Host: helloworld-kn-bp.$(k8s-domain)\" $(knative-gw) 
+	@echo to call: curl -H \"Host: helloworld-kn-bp.$(k8s-domain)\" http://$(knative-gw)/

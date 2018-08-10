@@ -3,6 +3,7 @@ draft.toml
 charts/
 config/
 tmp/
+scripts/
 helloworld
 debug
 .git

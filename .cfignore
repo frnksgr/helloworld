@@ -3,6 +3,7 @@ debug
 charts/
 tmp/
 config/
+scripts/
 .dockerignore
 .draft*
 .git*

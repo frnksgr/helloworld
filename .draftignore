@@ -2,3 +2,8 @@
 *.tmp
 *.temp
 .git*
+charts/
+config/
+scripts/
+tmp/
+

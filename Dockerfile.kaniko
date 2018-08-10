@@ -1,5 +1,3 @@
-ARG BASEIMAGE=scratch
-
 FROM golang:1.10 as builder
 WORKDIR /go/src/github.com/frnksgr/helloworld
 COPY . .
@@ -10,7 +8,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -o helloworld .
 # build image for cf with 
 # docker build -t frnksgr/helloworld-cf --build-arg BASEIMAGE=busybox .
 
-FROM $BASEIMAGE
+FROM scratch
 COPY --from=builder /go/src/github.com/frnksgr/helloworld .
 ENV FROM=dockerfile
 ENV PORT=8080
