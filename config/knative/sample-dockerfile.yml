@@ -10,7 +10,7 @@ spec:
         source:
           git:
             url: https://github.com/frnksgr/helloworld.git
-            revision: master
+            revision: kaniko
         template:
           name: kaniko
           arguments:
