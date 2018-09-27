@@ -1,5 +1,10 @@
+# multi stage dockerfile
+# base image can be selected by buildarg
+# NOTE: selection of baseimage does not work with kaniko e.g. in the context of knative
+
 ARG BASEIMAGE=scratch
 
+# build stage
 FROM golang:1.10 as builder
 WORKDIR /go/src/github.com/frnksgr/helloworld
 COPY . .
@@ -10,6 +15,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -o helloworld .
 # build image for cf with 
 # docker build -t frnksgr/helloworld-cf --build-arg BASEIMAGE=busybox .
 
+# resulting image
 FROM $BASEIMAGE
 COPY --from=builder /go/src/github.com/frnksgr/helloworld .
 ENV FROM=dockerfile

@@ -42,6 +42,9 @@ cf-push-containerimage: ## push to cloud foundry using docker image
 	cf push -f config/cf/manifest-ci.yml helloworld-ci 
 	@echo to call: curl http://helloworld-ci.$(cf-domain)/
 
+#appengine-deploy: ## deploy to google appengine
+#	gcp app deploy --image-url=docker.io/frnksgr/helloworld-cf
+
 k8s-deploy: ## deploy to k8s with ingress
 	kubectl apply -f config/k8s/sample.yml
 	@echo to call: curl -H \"Host: helloworld.$(k8s-domain)\" http://$(nginx-gw)/

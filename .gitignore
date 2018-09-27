@@ -2,4 +2,5 @@ helloworld
 debug
 *.swp
 *.log
+*.cache
 tmp/
