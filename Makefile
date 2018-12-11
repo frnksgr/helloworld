@@ -1,7 +1,7 @@
 
 src = main.go
 image = docker.io/frnksgr/helloworld
-cf-domain = bosh-lite.com
+cf-domain = sys.cf.frnksgr.net
 k8s-domain = default.example.com
 knative-gw=$(shell scripts/get-gateway.sh istio-system knative-ingressgateway)
 nginx-gw=$(shell scripts/get-gateway.sh nginx nginx-ingress-controller)
@@ -18,7 +18,7 @@ go-build: $(src) ## build local
 	@echo to run: FROM=commandline PORT=4711 ./helloworld
 	@echo to call: curl http://localhost:4711/
 
-docker-build: Dockerfile $(src) ## build default docker image
+docker-build: Dockerfile.docker $(src) ## build default docker image
 	docker build -t $(image) -f Dockerfile.docker .
 	@echo to run: docker run -e FROM=docker-container -p 4711:8080 $($image)
 	@echo to call: curl http://localhost:4711/
@@ -26,8 +26,8 @@ docker-build: Dockerfile $(src) ## build default docker image
 docker-push: ## push default docker image to repo
 	docker push $(image)
 
-docker-build-cf: Dockerfile $(src) ## build cf docker image
-	docker build -t $(image)-cf --build-arg BASEIMAGE=alpine -f Dockerfile.docker.
+docker-build-cf: Dockerfile.docker $(src) ## build cf docker image
+	docker build -t $(image)-cf --build-arg BASEIMAGE=alpine -f Dockerfile.docker .
 	@echo to run: docker run -e FROM=docker-container-cf -p 4711:8080 $($image)-cf
 	@echo to call: curl http://localhost:4711/
 
