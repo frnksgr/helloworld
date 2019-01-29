@@ -2,7 +2,8 @@
 applications:
 - buildpack: go_buildpack
   path: ../..
-  memory: 64M
+  memory: 32M
+  disk_quota: 100M
   instances: 2
   env:
     GOPACKAGENAME: helloworld

@@ -1,6 +1,7 @@
 ---
 applications:
-- memory: 48M
+- memory: 32M
+  disk_quota: 100M
   instances: 2
   docker:
     image: docker.io/frnksgr/helloworld-cf
