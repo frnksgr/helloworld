@@ -7,3 +7,4 @@ applications:
     image: docker.io/frnksgr/helloworld-cf
   env:
     FROM: cloudfoundry-containerimage
+    GOVERSION: go1.11

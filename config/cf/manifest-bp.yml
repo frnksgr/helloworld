@@ -8,3 +8,4 @@ applications:
   env:
     GOPACKAGENAME: helloworld
     FROM: cloudfoundry-buildpack
+    GOVERSION: go1.11
