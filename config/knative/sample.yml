@@ -7,9 +7,6 @@ spec:
   runLatest:
     configuration:
       revisionTemplate:
-        metadata:
-          labels:
-            knative.dev/type: app
         spec:
           container:
             image: docker.io/frnksgr/helloworld

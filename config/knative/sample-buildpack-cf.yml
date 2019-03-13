@@ -1,37 +1,32 @@
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
-  name: helloworld-kn-bp
+  name: helloworld-kn-bp-cf
   namespace: default
 spec:
   runLatest:
     configuration:
       build:  # build.knative.dev/v1alpha1.BuildTemplateSpec
         source:
-          # oneof git|gcs|custom:
           git:
             url: https://github.com/frnksgr/helloworld
             revision: master
         template:  # defines build template
-          name: buildpack # builder name
+          name: buildpacks-cloudfoundry # builder name
           #namespace: build-templates
           arguments:
           - name: IMAGE 
-            value: &image gcr.io/sap-cp-gke/helloworld-kn-bp  # destination for image
+            value: &image gcr.io/sap-cp-gke/helloworld-kn-bp-cf  # destination for image
           env:
             # required by go buildpack
             - name: GOPACKAGENAME
               value: helloworld
             - name: GOVERSION
-              value: go1.10
-
+              value: go1.10.3 # by now the highest version supported
       revisionTemplate:  # template for building Revision
-        metadata:
-          labels:
-            knative.dev/type: app
         spec:
           container:  # k8s core.v1.Container
             image: *image
             env:
             - name: FROM
-              value: knative-buildpack
+              value: knative-buildpack-cf
