@@ -20,13 +20,13 @@ func getEnv(name string, fallback string) string {
 // middleware doing request logging
 func requestLogger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("%s %s %s \n", r.Method, r.URL, r.Proto)
+		fmt.Printf("Got request: %s %s %s \n", r.Proto, r.Method, r.URL)
 		next.ServeHTTP(w, r)
 	})
 }
 
 func infoHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "%s %s %s \n", r.Method, r.URL, r.Proto)
+	fmt.Fprintf(w, "%s %s %s \n", r.Proto, r.Method, r.URL)
 	//Iterate over all header fields
 	for k, v := range r.Header {
 		fmt.Fprintf(w, "Header field %q, Value %q\n", k, v)
@@ -38,12 +38,12 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	log.Print("Hello world sample started.")
-
 	http.HandleFunc("/", defaultHandler)
 	http.HandleFunc("/info", infoHandler)
 
-	address := fmt.Sprintf(":%s", getEnv("PORT", defaultPort))
-	log.Printf("Running http server on %s", address)
+	address := fmt.Sprintf("0.0.0.0:%s", getEnv("PORT", defaultPort))
+	fmt.Printf("Running http server on %s\n", address)
+
+	// get it rolling ...
 	log.Fatal(http.ListenAndServe(address, requestLogger(http.DefaultServeMux)))
 }
