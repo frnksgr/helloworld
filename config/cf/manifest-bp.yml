@@ -1,6 +1,8 @@
 ---
 applications:
-- buildpack: go_buildpack
+- name: helloworld-bp
+  buildpacks: 
+  - go_buildpack
   path: ../..
   memory: 32M
   disk_quota: 100M
