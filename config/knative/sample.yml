@@ -11,7 +11,7 @@ spec:
           container:
             image: docker.io/frnksgr/helloworld
             env:
-            - name: PORT
-              value: "8080"
+                    #- name: PORT
+                    #   value: "8080"
             - name: FROM
               value: knative-native
