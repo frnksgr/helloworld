@@ -1,1 +1,22 @@
-Dockerfile.kaniko
+# multi stage dockerfile
+# base image can be selected by buildarg
+# NOTE: selection of baseimage does not work with kaniko e.g. in the context of knative
+
+ARG BASEIMAGE=scratch
+
+FROM golang:1.15 as builder
+WORKDIR /go/src/github.com/frnksgr/helloworld
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o helloworld .
+
+# NOTE: cf requires more than scratch
+# while K8S is fine with it.
+# build image for cf with 
+# docker build -t frnksgr/helloworld-cf --build-arg BASEIMAGE=busybox .
+
+FROM $BASEIMAGE
+COPY --from=builder /go/src/github.com/frnksgr/helloworld .
+ENV FROM=dockerfile
+ENV PORT=8080
+EXPOSE 8080
+ENTRYPOINT ["/helloworld"]
